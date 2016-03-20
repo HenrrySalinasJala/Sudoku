@@ -41,7 +41,7 @@ public class XMLHandler {
 		document.appendChild(configurations);
 		setConfigLevel(level);
 		setConfigAlgorithm(algorithm);
-		setConfigOutput( output);
+		setConfigOutput(output);
 	}
 	public void writeXML() throws Exception
 	{
@@ -51,7 +51,7 @@ public class XMLHandler {
 		this.streamResult = new StreamResult(new File(getOutput()));
 		this.transformer.transform(source, streamResult);
 	}
-	public XMLHandler readXML(String path) throws  Exception
+	public XMLHandler readXML(String path) throws Exception
 	{
 		this.document = documentBuilder.parse(path);
 		nodeList = this.document.getElementsByTagName(elementName);

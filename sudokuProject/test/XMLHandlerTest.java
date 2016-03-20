@@ -23,6 +23,5 @@ public class XMLHandlerTest {
 		assertEquals(xml.getLevel(), "levelXMLHandlerTest");
 		assertEquals(xml.getAlgorithm(), "algorithmXMLHandlerTest");
 		assertEquals(xml.getOutput(), ".\\files\\xmlHandlerTest.xml");
-		
 	}
 }
