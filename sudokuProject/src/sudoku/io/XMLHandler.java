@@ -31,8 +31,7 @@ public class XMLHandler {
 	private DOMSource				source;
 	private StreamResult			streamResult;
 	private NodeList				nodeList;
-	private static String			uriConfigFile			= ".\\files\\";
-	private static String			elementName				= "Configurations";
+	private static String			elementName				= "configurations";
 
 	public XMLHandler(String level, String algorithm, String output) throws Exception
 	{
@@ -42,7 +41,7 @@ public class XMLHandler {
 		document.appendChild(configurations);
 		setConfigLevel(level);
 		setConfigAlgorithm(algorithm);
-		setConfigOutput(uriConfigFile + output);
+		setConfigOutput( output);
 	}
 	public void writeXML() throws Exception
 	{
@@ -52,7 +51,7 @@ public class XMLHandler {
 		this.streamResult = new StreamResult(new File(getOutput()));
 		this.transformer.transform(source, streamResult);
 	}
-	public XMLHandler readXML(String path) throws DOMException, Exception
+	public XMLHandler readXML(String path) throws  Exception
 	{
 		this.document = documentBuilder.parse(path);
 		nodeList = this.document.getElementsByTagName(elementName);
