@@ -18,89 +18,88 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLHandler {
-	private DocumentBuilderFactory documentBuilderFactory =DocumentBuilderFactory.newInstance();
-	private DocumentBuilder documentBuilder;
-	private Document document;
-	private Element configurations;
-	private Attr attribute;
-	private Element level;
-	private Element output;
-	private Element algorithm;
-	
-	private TransformerFactory transformerFactory;
-	private Transformer transformer;
-	private DOMSource source;
-	private StreamResult streamResult;
-	private NodeList nodeList;
-	private static String uriConfigFile=".\\files\\";
-	private static String elementName="Configurations";
-	
-	public XMLHandler(String level,String algorithm,String output) throws Exception{
-		documentBuilder=documentBuilderFactory.newDocumentBuilder();
-		document=documentBuilder.newDocument();
-		configurations=document.createElement(elementName);
+	private DocumentBuilderFactory	documentBuilderFactory	= DocumentBuilderFactory.newInstance();
+	private DocumentBuilder			documentBuilder;
+	private Document				document;
+	private Element					configurations;
+	private Attr					attribute;
+	private Element					level;
+	private Element					output;
+	private Element					algorithm;
+	private TransformerFactory		transformerFactory;
+	private Transformer				transformer;
+	private DOMSource				source;
+	private StreamResult			streamResult;
+	private NodeList				nodeList;
+	private static String			uriConfigFile			= ".\\files\\";
+	private static String			elementName				= "Configurations";
+
+	public XMLHandler(String level, String algorithm, String output) throws Exception
+	{
+		documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		document = documentBuilder.newDocument();
+		configurations = document.createElement(elementName);
 		document.appendChild(configurations);
 		setConfigLevel(level);
 		setConfigAlgorithm(algorithm);
-		setConfigOutput(uriConfigFile+output);
+		setConfigOutput(uriConfigFile + output);
 	}
-
-	public XMLHandler() {
-		
-	}
-
-	public void writeXML() throws Exception{
-		
-		this.transformerFactory=TransformerFactory.newInstance();
-		this.transformer=transformerFactory.newTransformer();
-		this.source=new DOMSource(this.document);
-		this.streamResult=new StreamResult(new File(getOutput()));
+	public void writeXML() throws Exception
+	{
+		this.transformerFactory = TransformerFactory.newInstance();
+		this.transformer = transformerFactory.newTransformer();
+		this.source = new DOMSource(this.document);
+		this.streamResult = new StreamResult(new File(getOutput()));
 		this.transformer.transform(source, streamResult);
-	 }
-	
-	public XMLHandler readXML(String path) throws DOMException, Exception{
-		
-		this.document=documentBuilder.parse(path);
-		
-		nodeList=this.document.getElementsByTagName(elementName);
-		for (int i=0;i<nodeList.getLength();i++) {
-			Node node=nodeList.item(i);
-			if(node.getNodeType()==Node.ELEMENT_NODE){
-				Element element=(Element)node;
-				String lev=element.getElementsByTagName("level").item(0).getTextContent();
-				String alg=element.getElementsByTagName("algorithm").item(0).getTextContent();
-				String ou=element.getElementsByTagName("output").item(0).getTextContent();
+	}
+	public XMLHandler readXML(String path) throws DOMException, Exception
+	{
+		this.document = documentBuilder.parse(path);
+		nodeList = this.document.getElementsByTagName(elementName);
+		for (int i = 0; i < nodeList.getLength(); i++)
+		{
+			Node node = nodeList.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE)
+			{
+				Element element = (Element) node;
+				String lev = element.getElementsByTagName("level").item(0).getTextContent();
+				String alg = element.getElementsByTagName("algorithm").item(0).getTextContent();
+				String ou = element.getElementsByTagName("output").item(0).getTextContent();
 				this.level.setTextContent(lev);
 				this.algorithm.setTextContent(alg);
 				this.output.setTextContent(ou);
-				
 			}
 		}
 		return this;
 	}
-	 public String getLevel(){
-		 return level.getTextContent();
-	 }
-	 public String getOutput(){
-		 return output.getTextContent();
-	 }
-	 public String getAlgorithm(){
-		 return algorithm.getTextContent();
-	 }
-	public void setConfigLevel(String level) {
-		this.level=document.createElement("level");
+	public String getLevel()
+	{
+		return level.getTextContent();
+	}
+	public String getOutput()
+	{
+		return output.getTextContent();
+	}
+	public String getAlgorithm()
+	{
+		return algorithm.getTextContent();
+	}
+	public void setConfigLevel(String level)
+	{
+		this.level = document.createElement("level");
 		this.level.appendChild(document.createTextNode(level));
 		configurations.appendChild(this.level);
-	 }
-	public void setConfigAlgorithm(String algorithm) {
-		this.algorithm=document.createElement("algorithm");
+	}
+	public void setConfigAlgorithm(String algorithm)
+	{
+		this.algorithm = document.createElement("algorithm");
 		this.algorithm.appendChild(document.createTextNode(algorithm));
 		configurations.appendChild(this.algorithm);
-	 }
-		
-	public void setConfigOutput(String output) {
-		this.output=document.createElement("output");
+	}
+	public void setConfigOutput(String output)
+	{
+		this.output = document.createElement("output");
 		this.output.appendChild(document.createTextNode(output));
 		configurations.appendChild(this.output);
-	 }		 
+	}
 }
