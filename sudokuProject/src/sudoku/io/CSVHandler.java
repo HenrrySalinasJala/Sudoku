@@ -2,6 +2,9 @@ package sudoku.io;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.ParseConversionEvent;
+
 import java.io.File;
 import java.io.FileWriter;
 import com.csvreader.CsvWriter;
@@ -17,24 +20,39 @@ public class CSVHandler {
         this.output = output; 
         Cell cell=new Cell(0,0);        
     }
-    public void csvRead(String grid,int gridSize)
-    {       	
+    public int[][] csvRead()
+    {      int[][]  grid = new int[9][9]; 	
         try
         {
         		CsvReader rsudoku = new CsvReader(output);	
         		List<String> spot = new ArrayList<String>();
+        		String grides="";
+
+               while (rsudoku.readRecord())
+			{
+            	   grides+=rsudoku.getRawRecord();
+                }
+        		rsudoku.close(); 
+                String[] parts = grides.split(",");
+                for (int i = 0; i < 8; i++) 
+                {
+                	 
+                	String []cell = parts[i].split("(?!^)");
+                    for (int j = 0; j < 8; j++) {
+						grid[i][j]= Integer.parseInt(cell[j]);
+					}
+                   
+				}
+               
         		
-        		int index = 0;
-                while (index < grid.length()) {
-                    spot.add(grid.substring(index, Math.min(index + gridSize,grid.length())));
-                    index += gridSize;
-                }	
-        		rsudoku.close(); 	        	                        
+        		
             
         } catch (IOException e)
         {
             e.printStackTrace();
-        }   
+        }
+        return grid;
+		  
      }
     
     
