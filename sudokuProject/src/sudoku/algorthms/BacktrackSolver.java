@@ -14,9 +14,9 @@ public class BacktrackSolver {
             if (grid[currentCell.row][colIndex] == value)
                 return false;
         }
-        for (int r = 0; r < grid.length; r++)
+        for (int rowIndex = 0; rowIndex < grid.length; rowIndex++)
         {
-            if (grid[r][currentCell.col] == value)
+            if (grid[rowIndex][currentCell.col] == value)
                 return false;
         }
         if (!checkValueInGrid(currentCell, value, grid))
