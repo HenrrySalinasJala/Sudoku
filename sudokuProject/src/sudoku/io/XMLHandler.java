@@ -1,103 +1,126 @@
 package sudoku.io;
 
 import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class XMLHandler {
-    private DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-    private DocumentBuilder documentBuilder;
-    private Document document;
-    private Element configurations;
-    private Attr attribute;
-    private Element level;
-    private Element output;
-    private Element algorithm;
-    private TransformerFactory transformerFactory;
-    private Transformer transformer;
-    private DOMSource source;
+    String level;
+    String output;
+    String algorithm;
+    String path;
+    SAXBuilder builder;
+    File xmlFile;
     private StreamResult streamResult;
-    private NodeList nodeList;
-    private static String elementName = "configurations";
 
-    public XMLHandler(String level, String algorithm, String output) throws Exception
+    public XMLHandler(String level, String algorithm, String output, String path) throws Exception
     {
-        documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        document = documentBuilder.newDocument();
-        configurations = document.createElement(elementName);
-        document.appendChild(configurations);
-        setConfigLevel(level);
-        setConfigAlgorithm(algorithm);
-        setConfigOutput(output);
+        builder = new SAXBuilder();
+        xmlFile = new File(path);
+        this.path = path;
+        this.level = level;
+        this.algorithm = algorithm;
+        this.output = output;
     }
     public void writeXML() throws Exception
     {
-        this.transformerFactory = TransformerFactory.newInstance();
-        this.transformer = transformerFactory.newTransformer();
-        this.source = new DOMSource(this.document);
-        this.streamResult = new StreamResult(new File(getOutput()));
-        this.transformer.transform(source, streamResult);
+        Element settings = new Element("settings");
+        Document document = new Document(settings);
+        Element level = new Element("level");
+        level.setText(this.level);
+        Element output = new Element("output");
+        output.setText(this.output);
+        Element algorithm = new Element("algorithm");
+        algorithm.setText(this.algorithm);
+        Element path = new Element("path");
+        path.setText(this.path);
+        document.getRootElement().addContent(level);
+        document.getRootElement().addContent(output);
+        document.getRootElement().addContent(algorithm);
+        document.getRootElement().addContent(path);
+        XMLOutputter xmlOutput = new XMLOutputter();
+        xmlOutput.setFormat(Format.getPrettyFormat());
+        OutputStream os = new FileOutputStream(this.xmlFile);
+        xmlOutput.output(document, os);
     }
-    public XMLHandler readXML(String path) throws Exception
+    public void readXML() throws JDOMException, IOException
     {
-        this.document = documentBuilder.parse(path);
-        nodeList = this.document.getElementsByTagName(elementName);
-        for (int i = 0; i < nodeList.getLength(); i++)
+        Document document = (Document) builder.build(xmlFile);
+        Element rootNode = document.getRootElement();
+        List list = rootNode.getChildren("settings");
+        for (int i = 0; i < list.size(); i++)
         {
-            Node node = nodeList.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE)
-            {
-                Element element = (Element) node;
-                String lev = element.getElementsByTagName("level").item(0).getTextContent();
-                String alg = element.getElementsByTagName("algorithm").item(0).getTextContent();
-                String ou = element.getElementsByTagName("output").item(0).getTextContent();
-                this.level.setTextContent(lev);
-                this.algorithm.setTextContent(alg);
-                this.output.setTextContent(ou);
-            }
+            Element node = (Element) list.get(i);
+            this.level = node.getChildText("level");
+            this.output = node.getChildText("output");
+            this.algorithm = node.getChildText("algorithm");
+            this.path = node.getChildText("path");
         }
-        return this;
     }
     public String getLevel()
     {
-        return level.getTextContent();
+        return level;
     }
     public String getOutput()
     {
-        return output.getTextContent();
+        return output;
     }
     public String getAlgorithm()
     {
-        return algorithm.getTextContent();
+        return algorithm;
     }
-    public void setConfigLevel(String level)
+    public String getPath()
     {
-        this.level = document.createElement("level");
-        this.level.appendChild(document.createTextNode(level));
-        configurations.appendChild(this.level);
+        return path;
     }
-    public void setConfigAlgorithm(String algorithm)
+    public void setConfigLevel(String level) throws JDOMException, IOException
     {
-        this.algorithm = document.createElement("algorithm");
-        this.algorithm.appendChild(document.createTextNode(algorithm));
-        configurations.appendChild(this.algorithm);
+        SAXBuilder builder = new SAXBuilder();
+        File xmlFile = new File(this.path);
+        Document doc = (Document) builder.build(xmlFile);
+        Element rootNode = doc.getRootElement();
+        Element levelElement = rootNode.getChild("level");
+        levelElement.setText(level);
+        this.level = levelElement.getText();
     }
-    public void setConfigOutput(String output)
+    public void setConfigAlgorithm(String algorithm) throws JDOMException, IOException
     {
-        this.output = document.createElement("output");
-        this.output.appendChild(document.createTextNode(output));
-        configurations.appendChild(this.output);
+        SAXBuilder builder = new SAXBuilder();
+        File xmlFile = new File(this.path);
+        Document doc = (Document) builder.build(xmlFile);
+        Element rootNode = doc.getRootElement();
+        Element algorithmElement = rootNode.getChild("algorithm");
+        algorithmElement.setText(algorithm);
+        this.algorithm = algorithmElement.getText();
+    }
+    public void setConfigOutput(String output) throws JDOMException, IOException
+    {
+        SAXBuilder builder = new SAXBuilder();
+        File xmlFile = new File(this.path);
+        Document doc = (Document) builder.build(xmlFile);
+        Element rootNode = doc.getRootElement();
+        Element outputElement = rootNode.getChild("output");
+        outputElement.setText(output);
+        this.output = outputElement.getText();
+    }
+    public void setConfigPath(String path) throws JDOMException, IOException
+    {
+        SAXBuilder builder = new SAXBuilder();
+        File xmlFile = new File(this.path);
+        Document doc = (Document) builder.build(xmlFile);
+        Element rootNode = doc.getRootElement();
+        Element pathElement = rootNode.getChild("path");
+        pathElement.setText(path);
+        this.path = pathElement.getText();
     }
 }

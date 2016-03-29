@@ -1,5 +1,7 @@
 package sudoku;
 
+import java.io.IOException;
+import org.jdom2.JDOMException;
 import org.w3c.dom.DOMException;
 import sudoku.io.XMLHandler;
 
@@ -20,7 +22,7 @@ public class Settings {
         this.level = level;
         this.output = ".\\files\\"+output;
         this.algorithm = algorithm;
-        xml = new XMLHandler(level, algorithm, output);
+        //xml = new XMLHandler(level, algorithm, output);
     }
     /***
      * this is a constructpr wthout parameters
@@ -31,8 +33,9 @@ public class Settings {
         this.level = "1";
         this.algorithm = "Backtrack";
         this.output = ".\\files\\sudokuDefaultConfig.xml";
-        xml = new XMLHandler(level, algorithm, output);
+        //xml = new XMLHandler(level, algorithm, output);
     }
+   
     public String getLevel()
     {
         return level;
@@ -49,17 +52,23 @@ public class Settings {
     {
         return xml.getLevel();
     }
-    public void setLevel(String level)
+    /**
+     * this method set the level attribute
+     * @param level input parameter for assign to attribute
+     * @throws IOException 
+     * @throws JDOMException 
+     */
+    public void setLevel(String level) throws JDOMException, IOException
     {
         this.level = level;
         xml.setConfigLevel(level);
     }
-    public void setAlgorithm(String algorithm)
+    public void setAlgorithm(String algorithm) throws JDOMException, IOException
     {
         this.algorithm = algorithm;
         xml.setConfigAlgorithm(algorithm);
     }
-    public void setOutput(String output)
+    public void setOutput(String output) throws JDOMException, IOException
     {
         this.output = output;
         xml.setConfigOutput(output);
@@ -70,7 +79,7 @@ public class Settings {
     }
     public void readXmlSettings() throws Exception
     {
-        xml.readXML(output);
+        //xml.readXML(output);
         level = xml.getLevel();
         algorithm = xml.getAlgorithm();
         output = xml.getOutput();
