@@ -8,19 +8,29 @@ public class Settings {
     private String output;
     private String algorithm;
     private XMLHandler xml;
-
+    /***
+     * this function is the construcor of the class
+     * @param level keep the level of sudoku game
+     * @param algorithm keep the algorithm used to solve the sudoku
+     * @param output keep the output name of the xml file
+     * @throws Exception if a exception occours when de code is exeuted this implementation let catch some possible error  
+     */
     public Settings(String level, String algorithm, String output) throws Exception
     {
         this.level = level;
-        this.output = output;
+        this.output = ".\\files\\"+output;
         this.algorithm = algorithm;
         xml = new XMLHandler(level, algorithm, output);
     }
+    /***
+     * this is a constructpr wthout parameters
+     * @throws Exception
+     */
     public Settings() throws Exception
     {
         this.level = "1";
         this.algorithm = "Backtrack";
-        this.output = "sudokuDefaultConfig.xml";
+        this.output = ".\\files\\sudokuDefaultConfig.xml";
         xml = new XMLHandler(level, algorithm, output);
     }
     public String getLevel()
@@ -47,7 +57,7 @@ public class Settings {
     public void setAlgorithm(String algorithm)
     {
         this.algorithm = algorithm;
-        xml.setConfigOutput(algorithm);
+        xml.setConfigAlgorithm(algorithm);
     }
     public void setOutput(String output)
     {

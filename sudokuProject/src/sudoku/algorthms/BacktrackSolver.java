@@ -3,6 +3,13 @@ package sudoku.algorthms;
 import sudoku.Cell;
 
 public class BacktrackSolver {
+    /**
+     * this method check through the parameters if a values into a cell is valid 
+     * @param currentCell this parameter contains the current cell object
+     * @param value this parameter keep the value to evaluate is valid 
+     * @param grid this parameter contains the matrix of sudoku
+     * @return if the value is checked return true else return false
+     */
     static boolean isValid(Cell currentCell, int value, int grid[][])
     {
         if (grid[currentCell.row][currentCell.col] != 0)
@@ -25,9 +32,13 @@ public class BacktrackSolver {
         }
         return true;
     }
-    /*
+   
+    /***
      * This function check if value is present in grid to get the grid we should
-     * calculate (x1,y1) (x2,y2) that are positions in the grid
+     * @param currentCell  this parameter contains the current cell object
+     * @param value value this parameter keep the value to evaluate is valid
+     * @param grid grid this parameter contains the matrix of sudoku
+     * @return if the value is checked return true else return false
      */
     public static boolean checkValueInGrid(Cell currentCell, int value, int[][] grid)
     {
@@ -41,6 +52,11 @@ public class BacktrackSolver {
                     return false;
         return true;
     }
+    /***
+     * this method get next cell in the matrix
+     * @param cur keep the current cell
+     * @return return the nex cell to evaluate
+     */
     static Cell getNextCell(Cell cur)
     {
         int row = cur.row;
@@ -56,6 +72,13 @@ public class BacktrackSolver {
         Cell next = new Cell(row, col);
         return next;
     }
+    /***
+     * this a recursive method for solve the sudoku 
+     * @param currentCell keep the current cell
+     * @param grid keep the matrix of values
+     * @return true of the sudoku is solved
+     * 
+     */
     public static boolean solve(Cell currentCell, int grid[][])
     {
         if (currentCell == null)
