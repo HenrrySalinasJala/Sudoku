@@ -7,7 +7,7 @@ public class SettingsTest {
     @Test
     public void aSettingsObjectCanBeCreatedWiThreeParameters() throws Exception
     {
-        Settings setting = new Settings("level", "algorith", "output.xml");
+        Settings setting = new Settings("level", "algorith", "output.xml",".\\files\\sudokuDefaultConfig.xml");
         assertNotNull(setting);
     }
     @Test
@@ -20,7 +20,7 @@ public class SettingsTest {
     public void aSettingsConfigDefaultCanBeWritedInAXmlFile() throws Exception
     {
         Settings setting = new Settings();
-        setting.setOutput(".\\files\\SettingTest.xml");
+        setting.setPath(".\\files\\SettingTest.xml");
         setting.writeXmlSettings();
         File file = new File(setting.getOuput());
         assertTrue(file.exists());
@@ -28,11 +28,11 @@ public class SettingsTest {
     @Test
     public void theSettingsInformationCanBeReadedFromXmlConfigFile() throws Exception
     {
-        Settings set = new Settings("levelTestSetting", "algorithmTestSettings", ".\\files\\SettingTest.xml");
+        Settings set = new Settings("levelTestSetting", "algorithmTestSettings","junit.txt", ".\\files\\SettingTest.xml");
         set.writeXmlSettings();
         set.readXmlSettings();
         assertEquals("levelTestSetting", set.getLevel());
         assertEquals("algorithmTestSettings", set.getAlgorithm());
-        assertEquals(".\\files\\SettingTest.xml", set.getOuput());
+        assertEquals("junit.txt", set.getOuput());
     }
 }
