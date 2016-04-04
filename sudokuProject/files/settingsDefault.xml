@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <level>1</level>
+  <output>sudoku.txt</output>
+  <algorithm>backtrack</algorithm>
+  <path>.\files\SettingTest.xml</path>
+</settings>

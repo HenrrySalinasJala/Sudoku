@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <level>levelTestSetting</level>
+  <output>junit.txt</output>
+  <algorithm>algorithmTestSettings</algorithm>
+  <path>.\files\SettingTest.xml</path>
+</settings>
