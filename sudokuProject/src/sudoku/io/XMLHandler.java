@@ -22,7 +22,14 @@ public class XMLHandler {
     SAXBuilder builder;
     File xmlFile;
     private StreamResult streamResult;
-
+    /***
+     * This method is the constructor of XMLHandler
+     * @param level this parameter represent the level of the game
+     * @param algorithm this parameter represent the algorithm used for solve the game
+     * @param output this parameter represent the type of output (.TXT, .CSV) 
+     * @param path this parameter  represent the output path of xml setting file 
+     * @throws Exception this throws handle exceptions 
+     */
     public XMLHandler(String level, String algorithm, String output, String path) throws Exception
     {
         builder = new SAXBuilder();
@@ -32,6 +39,10 @@ public class XMLHandler {
         this.algorithm = algorithm;
         this.output = output;
     }
+    /***
+     * This method write the xml file in a path especified
+     * @throws Exception Exception this throws handle exceptions
+     */
     public void writeXML() throws Exception
     {
         Element settings = new Element("settings");
@@ -53,6 +64,11 @@ public class XMLHandler {
         OutputStream os = new FileOutputStream(this.xmlFile);
         xmlOutput.output(document, os);
     }
+    /***
+     * This method read the content of a xml file
+     * @throws JDOMException Exception this throws handle exceptions
+     * @throws IOException Exception this throws handle exceptions
+     */
     public void readXML() throws JDOMException, IOException
     {
         Document document = (Document) builder.build(xmlFile);
@@ -67,22 +83,44 @@ public class XMLHandler {
             this.path = node.getChildText("path");
         }
     }
+    /**
+     * This method get the current level value
+     * @return the level field
+     */
     public String getLevel()
     {
         return level;
     }
+    /***
+     * This method get the current output
+     * @return the output value
+     */
     public String getOutput()
     {
         return output;
     }
+    /***
+     * This method get the algorithm
+     * @return the algorithm value
+     */
     public String getAlgorithm()
     {
         return algorithm;
     }
+    /***
+     * This method return the current path value
+     * @return the path value
+     */
     public String getPath()
     {
         return path;
     }
+    /***
+     * this method set the level value
+     * @param level this parameter represent the new value that take the value field
+     * @throws JDOMException this throws handle JDOMException
+     * @throws IOException this throws handle IOException
+     */
     public void setConfigLevel(String level) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();
@@ -93,6 +131,12 @@ public class XMLHandler {
         levelElement.setText(level);
         this.level = levelElement.getText();
     }
+    /***
+     * This method set the algorithm value
+     * @param algorithm this parameter represent the new value that take the algorithm field
+     * @throws JDOMException this throw handle JDOMExcpetions
+     * @throws IOException this throws handle IOExceptions
+     */
     public void setConfigAlgorithm(String algorithm) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();
@@ -103,6 +147,12 @@ public class XMLHandler {
         algorithmElement.setText(algorithm);
         this.algorithm = algorithmElement.getText();
     }
+    /***
+     * This method set the output value
+     * @param output this parameter represent the new value that take the output field
+     * @throws JDOMException this throw handle JDOMExcpetions
+     * @throws IOException this throws handle IOExceptions
+     */
     public void setConfigOutput(String output) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();
@@ -113,6 +163,12 @@ public class XMLHandler {
         outputElement.setText(output);
         this.output = outputElement.getText();
     }
+    /***
+     * This method set the path value
+     * @param path this parameter represent the new value that take the path field
+     * @throws JDOMException this throw handle JDOMExcpetions
+     * @throws IOException this throws handle IOExceptions
+     */
     public void setConfigPath(String path) throws JDOMException, IOException
     {
         SAXBuilder builder = new SAXBuilder();

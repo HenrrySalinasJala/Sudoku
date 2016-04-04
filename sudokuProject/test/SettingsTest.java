@@ -22,7 +22,7 @@ public class SettingsTest {
         Settings setting = new Settings();
         setting.setPath(".\\files\\SettingTest.xml");
         setting.writeXmlSettings();
-        File file = new File(setting.getOuput());
+        File file = new File(setting.getPath());
         assertTrue(file.exists());
     }
     @Test
