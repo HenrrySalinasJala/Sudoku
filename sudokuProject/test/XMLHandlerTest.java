@@ -5,31 +5,22 @@ import sudoku.io.XMLHandler;
 
 public class XMLHandlerTest {
     @Test
-    public void aXMLFileCanBeCreateWithLevelOutputAndAlgorithm() throws Exception
+    public void aXMLFileCanBeCreateWithLevelOutputAndAlgorithm()
     {
-        Settings set = new Settings("levelXMLHandlerTest", "algori.txt", "ou.txt");
-        XMLHandler xml = new XMLHandler(set.getLevel(), set.getAlgorithm(), set.getOuput(),".\\files\\xmlHandlerX.xml");
-        xml.writeXML();
+        Settings set = new Settings("levelXMLHandlerTest", "algori.txt", "ou.txt", ".\\files\\xmlHandlerX.xml");
+        XMLHandler xml = new XMLHandler(set.getPath());
+        xml.writeXML(set);
     }
+
     @Test
-    public void theLevelOutputAndAlgorithmInformationCanBeReaded() throws Exception
+    public void theLevelOutputAndAlgorithmInformationCanBeReaded()
     {
-        Settings setting = new Settings("levelXMLHandlerTest", "algorithmXMLHandlerTest", "out.csv");
-        XMLHandler xml = new XMLHandler(setting.getLevel(), setting.getAlgorithm(), setting.getOuput(),".\\files\\xmlHandlerX.xml");
-        xml.writeXML();
-        xml.readXML();
-        assertEquals("levelXMLHandlerTest",xml.getLevel());
-        assertEquals("algorithmXMLHandlerTest",xml.getAlgorithm());
-        assertEquals(".\\files\\out.csv",xml.getOutput());
-    }
-    @Test
-    public void theLevelCanBeChanged ()throws Exception
-    {
-        Settings setting = new Settings("levelXMLHandlerTest", "algorithmXMLHandlerTest", "out.csv");
-        XMLHandler xml = new XMLHandler(setting.getLevel(), setting.getAlgorithm(), setting.getOuput(),".\\files\\xmlHandlerX.xml");
-        xml.writeXML();
-        xml.readXML();
-        xml.setConfigLevel("2");
-        assertEquals("2",xml.getLevel());
+        Settings setting = new Settings("levelXMLHandlerTest", "algorithmXMLHandlerTest", "out.csv",
+                ".\\files\\xmlHandlerX.xml");
+        XMLHandler xml = new XMLHandler(setting.getPath());
+        xml.writeXML(setting);
+        assertEquals("levelXMLHandlerTest", setting.getLevel());
+        assertEquals("algorithmXMLHandlerTest", setting.getAlgorithm());
+        assertEquals("out.csv", setting.getOutput());
     }
 }

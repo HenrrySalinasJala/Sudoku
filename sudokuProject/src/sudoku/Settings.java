@@ -7,20 +7,25 @@ import sudoku.io.XMLHandler;
 
 public class Settings {
     private XMLHandler xml;
+    private String level;
+    private String output;
+    private String algorithm;
+    private String path;
 
     /***
      * this method is the constructor of the class
      * 
-     * @param level
-     *        keep the level of sudoku game
-     * @param algorithm
-     *        keep the algorithm used to solve the sudoku
-     * @param output
-     *        keep the output name of the xml file
+     * @param level keep the level of sudoku game
+     * @param algorithm keep the algorithm used to solve the sudoku
+     * @param output keep the output name of the xml file
      */
     public Settings(String level, String algorithm, String output, String path)
     {
-        xml = new XMLHandler(level, algorithm, output, path);
+        this.level = level;
+        this.algorithm = algorithm;
+        this.output = output;
+        this.path = path;
+        xml = new XMLHandler(this.path);
     }
 
     /***
@@ -28,11 +33,10 @@ public class Settings {
      */
     public Settings()
     {
-        String defaultLevel = "1";
-        String defaultAlgorithm = "backtrack";
-        String defaultOutput = "sudoku.txt";
-        String defaultPath = ".\\files\\settingsDefault.xml";
-        xml = new XMLHandler(defaultLevel, defaultAlgorithm, defaultOutput, defaultPath);
+        this.level = "1";
+        this.algorithm = "backtrack";
+        this.output = "sudoku.txt";
+        this.path = ".\\files\\settingsDefault.xml";
     }
 
     /***
@@ -42,7 +46,7 @@ public class Settings {
      */
     public String getLevel()
     {
-        return xml.getLevel();
+        return this.level;
     }
 
     /***
@@ -50,9 +54,9 @@ public class Settings {
      * 
      * @return the return should by type String
      */
-    public String getOuput()
+    public String getOutput()
     {
-        return xml.getOutput();
+        return this.output;
     }
 
     /***
@@ -62,7 +66,7 @@ public class Settings {
      */
     public String getAlgorithm()
     {
-        return xml.getAlgorithm();
+        return this.algorithm;
     }
 
     /***
@@ -72,7 +76,7 @@ public class Settings {
      */
     public String getPath()
     {
-        return xml.getPath();
+        return this.path;
     }
 
     /***
@@ -82,51 +86,47 @@ public class Settings {
      */
     public String getXMLLevel()
     {
-        return xml.getLevel();
+        return this.level;
     }
 
     /**
      * this method set the level attribute
      * 
-     * @param level
-     *        input parameter represent the new value that take the level settings
+     * @param level input parameter represent the new value that take the level settings
      */
     public void setLevel(String level)
     {
-        xml.setConfigLevel(level);
+        this.level = level;
     }
 
     /**
      * this method set the algorithm attribute
      * 
-     * @param algorithm
-     *        input parameter represent the new value that take the algorithm settings
+     * @param algorithm input parameter represent the new value that take the algorithm settings
      */
     public void setAlgorithm(String algorithm)
     {
-        xml.setConfigAlgorithm(algorithm);
+        this.algorithm = algorithm;
     }
 
     /**
      * this method set the output attribute
      * 
-     * @param output
-     *        input parameter represent the new value that take the output settings
+     * @param output input parameter represent the new value that take the output settings
      */
     public void setOutput(String output)
     {
-        xml.setConfigOutput(output);
+        this.output = output;
     }
 
     /**
      * this method set the path attribute
      * 
-     * @param path
-     *        input parameter represent the new value that take the path settings
+     * @param path input parameter represent the new value that take the path settings
      */
     public void setPath(String path)
     {
-        xml.setConfigPath(path);
+        this.path = path;
     }
 
     /***
@@ -134,7 +134,8 @@ public class Settings {
      */
     public void writeXmlSettings()
     {
-        xml.writeXML();
+        xml = new XMLHandler(this.path);
+        xml.writeXML(this);
     }
 
     /***
@@ -142,6 +143,6 @@ public class Settings {
      */
     public void readXmlSettings()
     {
-        xml.readXML();
+        xml.readXML(this);
     }
 }

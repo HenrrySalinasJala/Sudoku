@@ -4,7 +4,7 @@ import sudoku.algorthms.BacktrackSolver;
 
 public class GameBoard {
     static int SIZE = 9;
-    private static int[][] grid;
+    public static int[][] grid;
 
     public GameBoard()
     {
@@ -39,10 +39,7 @@ public class GameBoard {
             System.out.println();
         }
     }
-    public int getSize()
-    {
-        return SIZE;
-    }
+    
     public void setGrid(int[][] grid) {
         this.grid=grid;
     }
