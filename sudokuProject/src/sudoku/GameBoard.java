@@ -3,9 +3,13 @@ package sudoku;
 import sudoku.algorthms.BacktrackSolver;
 
 public class GameBoard {
-    static int SIZE = 9;
-    public static int[][] grid;
+    public static int SIZE = 9;
+    private static int[][] grid;
 
+    public GameBoard(int [][]grid)
+    {
+        this.grid =grid;
+    }
     public GameBoard()
     {
         grid = new int[][] { 
