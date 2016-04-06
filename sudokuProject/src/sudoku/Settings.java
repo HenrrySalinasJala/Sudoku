@@ -6,6 +6,7 @@ import org.w3c.dom.DOMException;
 import sudoku.io.XMLHandler;
 
 public class Settings {
+
     private XMLHandler xml;
     private String level;
     private String output;

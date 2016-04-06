@@ -17,6 +17,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 public class XMLHandler {
+
     SAXBuilder builder;
     File xmlFile;
     private StreamResult streamResult;
@@ -24,14 +25,10 @@ public class XMLHandler {
     /***
      * This method is the constructor of XMLHandler
      * 
-     * @param level
-     *        this parameter represent the level of the game
-     * @param algorithm
-     *        this parameter represent the algorithm used for solve the game
-     * @param output
-     *        this parameter represent the type of output (.TXT, .CSV)
-     * @param path
-     *        this parameter represent the output path of xml setting file
+     * @param level this parameter represent the level of the game
+     * @param algorithm this parameter represent the algorithm used for solve the game
+     * @param output this parameter represent the type of output (.TXT, .CSV)
+     * @param path this parameter represent the output path of xml setting file
      */
     public XMLHandler(String path)
     {
@@ -46,7 +43,6 @@ public class XMLHandler {
     {
         try
         {
-            
             Element settings = new Element("settings");
             Document document = new Document(settings);
             Element level = new Element("level");
@@ -64,7 +60,7 @@ public class XMLHandler {
             XMLOutputter xmlOutput = new XMLOutputter();
             xmlOutput.setFormat(Format.getPrettyFormat());
             OutputStream outPutStream = new FileOutputStream(this.xmlFile);
-            xmlOutput.output(document, outPutStream); 
+            xmlOutput.output(document, outPutStream);
         } catch (FileNotFoundException exception)
         {
             exception.printStackTrace();
@@ -79,22 +75,19 @@ public class XMLHandler {
      */
     public Settings readXML(Settings settings)
     {
-       
         try
         {
-            
             Document document = (Document) builder.build(xmlFile);
             Element rootNode = document.getRootElement();
             List list = rootNode.getChildren("settings");
             for (int i = 0; i < list.size(); i++)
             {
                 Element node = (Element) list.get(i);
-                settings.setLevel(node.getChildText("level")); 
-                settings.setOutput(node.getChildText("output")); 
+                settings.setLevel(node.getChildText("level"));
+                settings.setOutput(node.getChildText("output"));
                 settings.setAlgorithm(node.getChildText("algorithm"));;
-                settings.setPath(node.getChildText("path")) ;
+                settings.setPath(node.getChildText("path"));
             }
-            
         } catch (Exception exception)
         {
             exception.printStackTrace();
@@ -102,7 +95,7 @@ public class XMLHandler {
         return settings;
     }
 
-    public void setXmlNode(String nodeName,String nodeValue)
+    public void setXmlNode(String nodeName, String nodeValue)
     {
         try
         {
@@ -111,7 +104,6 @@ public class XMLHandler {
             Element rootNode = doc.getRootElement();
             Element pathElement = rootNode.getChild(nodeName);
             pathElement.setText(nodeValue);
-           
         } catch (JDOMException exception)
         {
             exception.printStackTrace();
