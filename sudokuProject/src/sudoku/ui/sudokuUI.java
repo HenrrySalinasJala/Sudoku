@@ -81,8 +81,13 @@ public class sudokuUI {
         System.out.println("3. Set Algorithm\n");
         System.out.println("4. Show Current Settings\n");
         System.out.println("5. Go to Main Menu\n\n");
-        readSettingsMenu(readIntegerInput());
-        printSettigMenu();
+        int optionSelected=readIntegerInput();
+        if (optionSelected==5) {
+            start();
+        }else {
+            readSettingsMenu(optionSelected);
+            printSettigMenu();
+        }
     }
 
     public void setLevel(String levelSelected)

@@ -2,6 +2,9 @@ package sudoku.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -47,5 +50,20 @@ public class TXTHandler {
             }
         }
         return grid;
+    }
+
+    public void writeTXT(String matrix)
+    {
+        FileWriter fWriter;
+        try
+        {
+            fWriter = new FileWriter (txtFile);
+            PrintWriter pWriter = new PrintWriter (fWriter);
+            pWriter.println (matrix);
+            pWriter.close();
+        } catch (IOException exception)
+        {
+            exception.printStackTrace();
+        }
     }
 }

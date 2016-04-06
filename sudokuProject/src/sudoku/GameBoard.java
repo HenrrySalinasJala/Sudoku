@@ -50,4 +50,17 @@ public class GameBoard {
     public int[][] getGrid() {
         return this.grid;
     }
+    @Override
+    public String toString(){
+        String gridString="";
+        for (int i = 0; i < SIZE; i++)
+        {
+             for (int j = 0; j < SIZE; j++)
+            {
+                gridString+=grid[i][j];
+            }
+             
+        }
+        return gridString;
+    }
 }

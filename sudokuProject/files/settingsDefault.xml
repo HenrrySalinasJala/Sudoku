@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <level>LEVELSSSSS</level>
-  <output>2CSV</output>
-  <algorithm>ALGORITHMISMO</algorithm>
+  <level>1</level>
+  <output>sudoku.txt</output>
+  <algorithm>backtrack</algorithm>
   <path>.\files\settingsDefault.xml</path>
 </settings>
