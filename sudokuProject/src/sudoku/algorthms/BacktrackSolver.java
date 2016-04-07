@@ -2,7 +2,7 @@ package sudoku.algorthms;
 
 import sudoku.Cell;
 
-public class BacktrackSolver {
+public class BacktrackSolver implements ISudokuSolver{
     /**
      * this method check through the parameters if a values into a cell is valid 
      * @param currentCell this parameter contains the current cell object
@@ -79,7 +79,8 @@ public class BacktrackSolver {
      * @return true of the sudoku is solved
      * 
      */
-    public static boolean solve(Cell currentCell, int grid[][])
+    @Override
+    public  boolean solve(Cell currentCell, int grid[][])
     {
         if (currentCell == null)
             return true;

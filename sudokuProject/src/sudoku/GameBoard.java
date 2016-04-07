@@ -1,6 +1,7 @@
 package sudoku;
 
 import sudoku.algorthms.BacktrackSolver;
+import sudoku.algorthms.ISudokuSolver;
 
 public class GameBoard {
     public static int SIZE = 9;
@@ -24,10 +25,11 @@ public class GameBoard {
             { 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
     }
     
-    public void solveGrid()
+    public void solveGrid(ISudokuSolver solver)
     {
+    	
         Cell cell = new Cell(0, 0);
-        boolean solved = BacktrackSolver.solve(cell, grid);
+        boolean solved = solver.solve(cell, grid);
         if (!solved)
         {
             System.out.println("SUDOKU cannot be solved.");
